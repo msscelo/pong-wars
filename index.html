@@ -83,9 +83,11 @@
     const colorPalette = {
       ArcticPowder: "#F1F6F4",
       MysticMint: "#D9E8E3",
+      MysticMint2: "#D9FFE3",
       Forsythia: "#FFC801",
       DeepSaffron: "#FF9932",
       NocturnalExpedition: "#114C5A",
+      NocturnalExpedition2: "#11FF5A",
       OceanicNoir: "#172B36",
     };
 
@@ -97,9 +99,11 @@
 
     const DAY_COLOR = colorPalette.MysticMint;
     const DAY_BALL_COLOR = colorPalette.NocturnalExpedition;
+    const DAY_BALL_COLOR2 = colorPalette.NocturnalExpedition2;
 
     const NIGHT_COLOR = colorPalette.NocturnalExpedition;
     const NIGHT_BALL_COLOR = colorPalette.MysticMint;
+    const NIGHT_BALL_COLOR2 = colorPalette.MysticMint2;
 
     const SQUARE_SIZE = 25;
 
@@ -122,8 +126,18 @@
 
     let x2 = (canvas.width / 4) * 3;
     let y2 = canvas.height / 2;
-    let dx2 = -12.5;
+    let dx2 = -10.5;
     let dy2 = 12.5;
+
+    let x1a = canvas.width / 4;
+    let y1a = canvas.height / 2;
+    let dx1a = 12.5;
+    let dy1a = -12.5;
+
+    let x2a = (canvas.width / 4) * 3;
+    let y2a = canvas.height / 2;
+    let dx2a = -10.5;
+    let dy2a = 12.5;
 
     let iteration = 0;
 
@@ -217,23 +231,46 @@
       dx1 = bounce1.dx;
       dy1 = bounce1.dy;
 
+      drawBall(x1a, y1a, DAY_BALL_COLOR2);
+      let bounce1a = updateSquareAndBounce(x1a, y1a, dx1a, dy1a, DAY_COLOR);
+      dx1a = bounce1a.dx;
+      dy1a = bounce1a.dy;
+
       drawBall(x2, y2, NIGHT_BALL_COLOR);
       let bounce2 = updateSquareAndBounce(x2, y2, dx2, dy2, NIGHT_COLOR);
       dx2 = bounce2.dx;
       dy2 = bounce2.dy;
 
+      drawBall(x2a, y2a, NIGHT_BALL_COLOR2);
+      let bounce2a = updateSquareAndBounce(x2a, y2a, dx2a, dy2a, NIGHT_COLOR);
+      dx2a = bounce2a.dx;
+      dy2a = bounce2a.dy;
+
       let boundary1 = checkBoundaryCollision(x1, y1, dx1, dy1);
       dx1 = boundary1.dx;
       dy1 = boundary1.dy;
+
+      let boundary1a = checkBoundaryCollision(x1a, y1a, dx1a, dy1a);
+      dx1a = boundary1a.dx;
+      dy1a = boundary1a.dy;
 
       let boundary2 = checkBoundaryCollision(x2, y2, dx2, dy2);
       dx2 = boundary2.dx;
       dy2 = boundary2.dy;
 
+      let boundary2a = checkBoundaryCollision(x2a, y2a, dx2a, dy2a);
+      dx2a = boundary2a.dx;
+      dy2a = boundary2a.dy;
+
       x1 += dx1;
       y1 += dy1;
       x2 += dx2;
       y2 += dy2;
+
+      x1a += dx1a;
+      y1a += dy1a;
+      x2a += dx2a;
+      y2a += dy2a;
 
       iteration++;
       if (iteration % 1_000 === 0) console.log("iteration", iteration);
